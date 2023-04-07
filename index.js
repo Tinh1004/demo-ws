@@ -22,7 +22,7 @@ wss.on("connection", function (ws, req) {
       datastring = datastring.replace(/\'/g, '"');
       var data = JSON.parse(datastring);
       console.log("data:", data);
-      ws.send("Send");
+      ws.send(data.cmd);
     }
   });
 });
