@@ -57,6 +57,11 @@ io.on("connection", (socket) => {
     console.log("fromServer");
     // socket.to(data.room).emit("receive_message", data);
   });
+
+  socket.on("sendChat", (data) => {
+    console.log("sendChat", data);
+    io.emit("sendChat", data);
+  });
 });
 
 app.get("/", (req, res) => {
