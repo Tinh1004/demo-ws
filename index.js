@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/", (req, res) => {
-  io.emit("event", "Long occho");
+  io.emit("sendChat", "Long occho");
   return res.send("Hello World!");
 });
 
