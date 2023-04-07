@@ -4,12 +4,12 @@ const { Server } = require("ws");
 const PORT = process.env.PORT || 3000; //port for https
 
 const server = express()
-  .use("/", (req, res) => res.send("Hi there"))
+  .use("/", (req, res) => {
+    return res.send("Hello World!!!");
+  })
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const wss = new Server({ server });
-
-var webSockets = {};
 
 wss.on("connection", function (ws, req) {
   var userID = req.url.substr(1); //get userid from URL/userid
