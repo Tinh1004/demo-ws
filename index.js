@@ -33,41 +33,24 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const io = require("./module_sokect.js");
 
 app.use(cors());
 
 const server = http.createServer(app);
 
-const io = new Server(server);
+io.attach(server);
 
-app.post("/", (req, res) => {
-  console.log(req.body);
-  res.send("Hello World!");
-});
-
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket}`);
-
-  socket.on("event", (data) => {
-    console.log("event", data);
-    // socket.join(data);
-  });
-
-  socket.on("fromServer", (data) => {
-    console.log("fromServer");
-    // socket.to(data.room).emit("receive_message", data);
-  });
-
-  socket.on("sendChat", (data) => {
-    console.log("sendChat", data);
-    io.emit("sendChat", data);
-  });
-});
+// app.post("/", (req, res) => {
+//   console.log(req.body);
+//   res.send("Hello World!");
+// });
 
 app.get("/", (req, res) => {
-  io.emit("sendChat", "Long occho");
   return res.send("Hello World!");
 });
+
+app.use("/api", require("./routes/userRouter.js"));
 
 server.listen(3000, () => {
   console.log("SERVER IS RUNNING");
