@@ -31,11 +31,26 @@
 const express = require("express");
 const app = express();
 const http = require("http");
+const mongoose = require("mongoose");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const io = require("./module_sokect.js");
+const bodyParser = require("body-parser");
+MONGODB_URL =
+  "mongodb+srv://tinh46647:tinh46647tinh46647tinh46647@cluster0.zaonkol.mongodb.net/database_chatbot?retryWrites=true&w=majority";
+
+mongoose
+  .connect(MONGODB_URL)
+  .then(() => console.log("Connected!"))
+  .catch((e) => {
+    print("Connect failed!!");
+  });
 
 app.use(cors());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
 
 const server = http.createServer(app);
 
@@ -51,6 +66,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", require("./routes/userRouter.js"));
+app.use("/api/chatbot", require("./routes/chatbotRoute.js"));
 
 server.listen(3000, () => {
   console.log("SERVER IS RUNNING");

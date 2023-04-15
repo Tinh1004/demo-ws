@@ -2,7 +2,11 @@ const io = require("../module_sokect.js");
 const router = require("express").Router();
 
 router.get("/", (req, res) => {
-  io.emit("sendChat", "Long occho");
+  const jsonObject = {
+    user: "My Friend",
+    message: "Long occho",
+  };
+  io.emit("sendChat", jsonObject);
   return res.send("hello world 1");
 });
 

@@ -1,5 +1,12 @@
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer);
+const chatbotService = require("./services/chatbot.service");
+const msgErrorNotFound = [
+  "Xin lỗi, tôi không hiểu bạn nói gì!",
+  "Bạn có thể nhắc lại điều đó cho tôi được không!",
+  "Bạn có thể nói chi tiết cho tôi được không ạ!",
+  "",
+];
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket}`);
@@ -20,8 +27,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendChat", (data) => {
-    console.log("sendChat", data);
     const message = JSON.parse(data);
+    var msgAnswer = chatbotService.getAnswer(message.message);
+    console.log("sendChat", data);
+    console.log("msg", msgAnswer);
+
     const jsonObject = {
       user: message.user ?? "",
       message: message.message,
