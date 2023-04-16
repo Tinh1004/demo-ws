@@ -10,7 +10,6 @@ const msgErrorNotFound = [
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket}`);
-
   socket.on("event", (data) => {
     console.log("event", data);
     // socket.join(data);
@@ -29,12 +28,17 @@ io.on("connection", (socket) => {
   socket.on("sendChat", (data) => {
     const message = JSON.parse(data);
     var msgAnswer = chatbotService.getAnswer(message.message);
+
     console.log("sendChat", data);
     console.log("msg", msgAnswer);
 
+    if (!msgAnswer) {
+      const random = Math.floor(Math.random() * months.length);
+      msgAnswer = msgErrorNotFound[random];
+    }
     const jsonObject = {
-      user: message.user ?? "",
-      message: message.message,
+      user: "Bot",
+      message: msgAnswer,
     };
 
     io.emit("sendChat", jsonObject);
