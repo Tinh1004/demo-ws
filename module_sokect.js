@@ -71,6 +71,7 @@ io.on("connection", (socket) => {
       } else {
         errorNotFoundCount = 0;
       }
+
       const jsonObject = {
         user: "Bot",
         userId: "1",
