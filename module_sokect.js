@@ -8,13 +8,14 @@ const msgErrorNotFound = [
   "Xin lỗi tôi là 1 con bot chưa có hoàn thiện nên không thể hiểu hết những câu hỏi của bạn.",
 ];
 const errorMsg = "Xảy ra lỗi trong server!";
-var errorNotFoundCount = 0;
 var errorNotFoundMessage =
   "Tôi không hiểu bạn nói gì.\ntôi có 1 vài ý kiến:\n1. Menu\n2. chức năng khác...";
 
 var users = [];
 
 io.on("connection", (socket) => {
+  var errorNotFoundCount = 0;
+
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("joinUser", (user) => {
@@ -92,7 +93,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Khách hàng đã ngắt kết nối:", socket.id);
     for (var i = 0; i < users.length; i++) {
-      if (users[i].id == id) {
+      if (users[i].id == socket.id) {
         users.splice(i, 1);
         break;
       }
