@@ -93,7 +93,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Khách hàng đã ngắt kết nối:", socket.id);
     for (var i = 0; i < users.length; i++) {
-      if (users[i].id == socket.id) {
+      if (users[i].socketId == socket.id) {
         users.splice(i, 1);
         break;
       }
