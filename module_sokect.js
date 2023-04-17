@@ -48,7 +48,6 @@ io.on("connection", (socket) => {
       var msgAnswer = await chatbotService.getAnswer(message.message);
       console.log("sendChat", data);
       console.log("msg", msgAnswer);
-
       const findUser = users.find((e, i) => (e.id = data.userId));
       console.log("findUser", findUser);
 
@@ -81,13 +80,12 @@ io.on("connection", (socket) => {
       io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
     } catch (error) {
       console.log("error");
-      // const jsonObject = {
-      //   user: "Bot",
-      //   userId: "1",
-      //   message: errorMsg,
-      // };
-
-      // io.emit("sendChat", jsonObject);
+      const jsonObject = {
+        user: "Bot",
+        userId: "1",
+        message: "Có một số lỗi đã xảy ra.",
+      };
+      io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
     }
   });
   socket.on("disconnect", () => {

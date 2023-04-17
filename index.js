@@ -43,7 +43,7 @@ mongoose
   .connect(MONGODB_URL)
   .then(() => console.log("Connected!"))
   .catch((e) => {
-    print("Connect failed!!");
+    console.log("Connect failed!!");
   });
 
 app.use(cors());
