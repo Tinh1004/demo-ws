@@ -72,7 +72,7 @@ const driveCtrl = {
       });
 
       // ws temp and humi
-      const data = { temp: Humidity.Data, humi: Temperature.Data };
+      const data = { temp: Temperature.Data, humi: Humidity.Data };
       wsTurnOffOnLightLed(data);
 
       //update dive
