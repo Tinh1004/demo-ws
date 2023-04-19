@@ -161,6 +161,15 @@ const authCtrl = {
       return res.status(500).json({ msg: error.message });
     }
   },
+  getUsers: async (req, res) => {
+    try {
+      const users = await Users.find();
+      res.status(200).json(users);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ msg: error.message });
+    }
+  },
 };
 
 const createAccessToken = (payload) => {
