@@ -1,6 +1,7 @@
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer);
 const chatbotService = require("./services/chatbot.service");
+const driveService = require("./services/drive.service");
 const msgErrorNotFound = [
   "Xin lỗi, tôi không hiểu bạn nói gì!",
   "Bạn có thể nhắc lại điều đó cho tôi được không!",
@@ -20,25 +21,23 @@ io.on("connection", (socket) => {
 
   socket.on("joinUser", (user) => {
     console.log("user", user);
+    users.filter((e, i) => e.id != user._id);
     users.push({
       id: user._id,
       socketId: socket.id,
     });
   });
 
-  socket.on("event", (data) => {
-    console.log("event", data);
-    // socket.join(data);
+  socket.on("testTemHumi", (data) => {
+    console.log("testTemHumi ", data);
+    const d = { temp: 50, humi: 89.1 };
+    socket.emit("testTemHumi", d);
   });
 
-  socket.on("fromServer", (data) => {
-    console.log("fromServer");
-    // socket.to(data.room).emit("receive_message", data);
-  });
-
-  socket.on("focus", (data) => {
-    console.log("focus");
-    io.emit("focus", data);
+  socket.on("testLight", async (data) => {
+    console.log("testLight ", data);
+    await driveService.updateStatusLight(data);
+    socket.emit("testLight", data);
   });
 
   socket.on("sendChat", async (data) => {
@@ -84,11 +83,18 @@ io.on("connection", (socket) => {
       const jsonObject = {
         user: "Bot",
         userId: "1",
-        message: "Có một số lỗi đã xảy ra.",
+        message: errorMsg,
       };
       io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
     }
   });
+
+  socket.on("turnLedAction", (newLedStatus) => {
+    users.forEach((user) => {
+      socket.to(`${user.socketId}`).emit("turnLedActionToClient", newLedStatus);
+    });
+  });
+
   socket.on("disconnect", () => {
     console.log("Khách hàng đã ngắt kết nối:", socket.id);
     for (var i = 0; i < users.length; i++) {
