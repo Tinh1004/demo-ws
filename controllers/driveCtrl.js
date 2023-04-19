@@ -37,7 +37,7 @@ const driveCtrl = {
         const object = {
           title: "Cảnh Báo Nhiệt độ",
           body: "Nhiệt Độ quá cao!",
-          status: status,
+          status: "4",
         };
         notifyService.createNotify(object);
       }
@@ -47,7 +47,7 @@ const driveCtrl = {
         const object = {
           title: "Cảnh Báo AntiFire",
           body: "Waring AntiFire !!!",
-          status: status,
+          status: "2",
         };
         notifyService.createNotify(object);
       }
@@ -57,7 +57,7 @@ const driveCtrl = {
         const object = {
           title: "Cảnh Báo AntiTheft",
           body: "Waring AntiTheft !!!",
-          status: status,
+          status: "1",
         };
         notifyService.createNotify(object);
       }
@@ -68,7 +68,7 @@ const driveCtrl = {
         const object = {
           title: "Cảnh Báo RainAlarm",
           body: "Waring RainAlarm !!!",
-          status: status,
+          status: "3",
         };
         notifyService.createNotify(object);
       }
