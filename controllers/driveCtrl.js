@@ -142,11 +142,7 @@ function sendMessageWarningRainAlarm(token) {
 }
 
 function sendMessage(token, message, body) {
-  serviceFCM.sendMessage(
-    "fTwsUrQzQmSJEwFITiG8WP:APA91bE6RrSqyKKWxiZZl-yufaGasyLgYv55il7TwsV1R0hSMwUUqpuVvUnbLbkHTWtkXsWvmNAyWp_GAD5fjKH5dRfUC7BRqbFvpqbUU7VUSz7yHazoTUnwZRM6qQPcKZuZBFEyCFws",
-    message,
-    body
-  );
+  serviceFCM.sendMessage(token, message, body);
   io.emit("serviceFCM", "serviceFCM");
 }
 
