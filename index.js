@@ -36,7 +36,7 @@ app.use("/api/chatbot", require("./routes/chatbotRoute.js"));
 
 app.use("/apiNPM", (req, res) => {
   const token =
-    "dUnTEoBPReyQgX_D4R7PLp:APA91bF19Pa7P6Daj2jrahaCEzpWGKu-aPWgLZmAvZFcEgqPWiQIHunE_MYUx2pzU7-o0hqRZ1W0zeK76JJJMM-83mneWy6mgn8wgEP4_XP5gRBKYnxiHIHB3qK-0G9OxDFBqzc-wMzW";
+    "fVCAYH92RTegIS-1xQTp3I:APA91bH2xL_UzWSuyHpxGHlXEcZcXTZbUcgv-T78wVPQZOeMZSK4USF9Q63W4YyuiMJNJqN_Onw9LHRiuI2VlOck8LDCri-tB8PPnnUh7TXa7IZvjk8JkTJlhez5uZ8rfh4gCFcqIZOF";
   console.log(token);
   serviceFCM.sendMessage(
     token,
