@@ -73,7 +73,7 @@ const driveCtrl = {
 
       // ws temp and humi
       const data = { temp: Temperature.Data, humi: Humidity.Data };
-      wsTurnOffOnLightLed(data);
+      wsDataHumiTemp(data);
 
       //update dive
       await Drives.updateOne({ _id }, { $set: req.body });
@@ -106,7 +106,7 @@ const driveCtrl = {
       }
       const drive = await Drives.updateOne({ _id }, { $set: req.body });
       const data = { temp: Humidity.Data, humi: Temperature.Data };
-      wsTurnOffOnLightLed(data);
+      wsDataHumiTemp(data);
       return res.status(200).json(req.body);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -120,7 +120,7 @@ function wsTurnOffOnLightLed(data) {
 }
 
 //ws send realtime Temp and Humi
-function wsTurnOffOnLightLed(data) {
+function wsDataHumiTemp(data) {
   io.emit("testTemHumi", data);
 }
 
