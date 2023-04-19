@@ -12,7 +12,10 @@ const tokenNotifyCtrl = {
   createTokenNotify: async (req, res) => {
     try {
       const { userId, token } = req.body;
-      const tokenExisted = await TokenNotify.findOne({ token: token });
+      const tokenExisted = await TokenNotify.findOne({
+        token: token,
+        userId: userId,
+      });
       if (tokenExisted) {
         return res.status(500).json({ msg: "Token existed." });
       }
@@ -31,6 +34,16 @@ const tokenNotifyCtrl = {
       const notify = await TokenNotify.findOneAndDelete({
         userId: req.params.userId,
       });
+      return res
+        .status(200)
+        .json({ notify, messenger: "Remove token successed" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  removeAllTokenNotify: async (req, res) => {
+    try {
+      const notify = await TokenNotify.remove();
       return res
         .status(200)
         .json({ notify, messenger: "Remove token successed" });

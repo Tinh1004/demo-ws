@@ -1,12 +1,9 @@
 const Drives = require("../models/driveModel");
 const TokenNotify = require("../models/tokenNotifyModal");
 const _id = "643051e1e4e0a63785a4f537";
-
+const notifyService = require("../services/notify.servive");
 const io = require("../module_sokect");
-const driveService = require("../services/drive.service");
 const serviceFCM = require("../serviceFCM");
-const token =
-  "dUnTEoBPReyQgX_D4R7PLp:APA91bF19Pa7P6Daj2jrahaCEzpWGKu-aPWgLZmAvZFcEgqPWiQIHunE_MYUx2pzU7-o0hqRZ1W0zeK76JJJMM-83mneWy6mgn8wgEP4_XP5gRBKYnxiHIHB3qK-0G9OxDFBqzc-wMzW";
 const driveCtrl = {
   getDrive: async (_, res) => {
     try {
@@ -21,7 +18,6 @@ const driveCtrl = {
       const tokens = await TokenNotify.find();
       console.log("tokens: ", tokens);
       console.log(req.body);
-
       const { Humidity, Temperature, AntiFire, AntiTheft, RainAlarm, Led } =
         req.body;
 
@@ -38,21 +34,43 @@ const driveCtrl = {
       // check Temperature >= 50 warning send FCM
       if (Temperature.Data >= 50) {
         arrayError.temp = true;
+        const object = {
+          title: "Cảnh Báo Nhiệt độ",
+          body: "Nhiệt Độ quá cao!",
+          status: status,
+        };
+        notifyService.createNotify(object);
       }
-
       // check device warning send FCM
-      if (AntiFire.Status != "no") {
+      if (AntiFire.Status != "no" || AntiFire.PPM > 100) {
         arrayError.antiFire = true;
+        const object = {
+          title: "Cảnh Báo AntiFire",
+          body: "Waring AntiFire !!!",
+          status: status,
+        };
+        notifyService.createNotify(object);
       }
-
       // check device warning send FCM
       if (AntiTheft.Status != "no") {
         arrayError.antiTheft = true;
+        const object = {
+          title: "Cảnh Báo AntiTheft",
+          body: "Waring AntiTheft !!!",
+          status: status,
+        };
+        notifyService.createNotify(object);
       }
 
       //check device rain warning send FCM
       if (RainAlarm.Status != "no") {
         arrayError.rainAlarm = true;
+        const object = {
+          title: "Cảnh Báo RainAlarm",
+          body: "Waring RainAlarm !!!",
+          status: status,
+        };
+        notifyService.createNotify(object);
       }
 
       //send message
@@ -125,20 +143,21 @@ function wsDataHumiTemp(data) {
 }
 
 // send FCM
-function sendMessageWarningTemp(token) {
-  sendMessage(token, "Cảnh Báo Nhiệt độ", "Nhiệt Độ quá cao!");
+
+function sendMessageWarningAntiTheft(token) {
+  sendMessage(token, "Cảnh Báo AntiTheft", "Waring AntiTheft !!!");
 }
 
 function sendMessageWarningAntiFire(token) {
   sendMessage(token, "Cảnh Báo AntiFire", "Waring AntiFire !!!");
 }
 
-function sendMessageWarningAntiTheft(token) {
-  sendMessage(token, "Cảnh Báo AntiTheft", "Waring AntiTheft !!!");
-}
-
 function sendMessageWarningRainAlarm(token) {
   sendMessage(token, "Cảnh Báo RainAlarm", "Waring RainAlarm !!!");
+}
+
+function sendMessageWarningTemp(token) {
+  sendMessage(token, "Cảnh Báo Nhiệt độ", "Nhiệt Độ quá cao!");
 }
 
 function sendMessage(token, message, body) {

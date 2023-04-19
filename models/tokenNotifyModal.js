@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const tokenNotifySchema = new mongoose.Schema(
   {
     token: String,
-    userId: String,
+    userId: { type: mongoose.Types.ObjectId, ref: "user" },
   },
   {
     timestamps: true,

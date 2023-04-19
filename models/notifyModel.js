@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const notifySchema = new mongoose.Schema(
   {
-    token: String,
     title: String,
     body: String,
+    status: { type: String, enum: ["1", "2", "3", "4"] },
   },
   {
     timestamps: true,

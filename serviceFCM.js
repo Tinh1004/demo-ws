@@ -1,9 +1,9 @@
 const FCM = require("fcm-node");
 var serverKey = require("./privateKey.json");
 var fcm = new FCM(serverKey);
-
+// const driveService = require("./services/notify.servive");
 const serviceFCM = {
-  sendMessage: (token, title, body) => {
+  sendMessage: (token, title, body, status) => {
     var message = {
       to: token,
       // collapse_key: '...',
@@ -23,6 +23,7 @@ const serviceFCM = {
         console.log(err);
       } else {
         console.log("Successfully sent with response: ", response);
+        // driveService.createNotify(object);
         //   createMessage(title, body, status);
       }
     });
