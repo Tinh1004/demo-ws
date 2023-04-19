@@ -3,7 +3,7 @@ var serverKey = require("./privateKey.json");
 var fcm = new FCM(serverKey);
 // const driveService = require("./services/notify.servive");
 const serviceFCM = {
-  sendMessage: (token, title, body, status) => {
+  sendMessage: (token, title, body) => {
     var message = {
       to: token,
       // collapse_key: '...',
