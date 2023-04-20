@@ -13,6 +13,22 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
+const URI = process.env.MONGODB_URL;
+mongoose.connect(
+  URI,
+  {
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) throw err;
+    console.log("Connected to mongodb");
+  }
+);
+
+
 // Socket
 const http = require("http").createServer(app);
 // const io = require("socket.io")(http);
@@ -55,20 +71,6 @@ app.use("/api/testIoLightOn", (req, res) => {
   io.emit("testLight", 0);
 });
 
-const URI = process.env.MONGODB_URL;
-mongoose.connect(
-  URI,
-  {
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  (err) => {
-    if (err) throw err;
-    console.log("Connected to mongodb");
-  }
-);
 
 io.attach(http);
 

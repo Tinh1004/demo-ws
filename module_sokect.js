@@ -20,12 +20,16 @@ io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("joinUser", (user) => {
-    console.log("user", user);
-    users.filter((e, i) => e.id != user._id);
-    users.push({
+    console.log("user", user._id);
+    const newUser = users.filter((e, i) => {
+      return e.id != user._id;
+    });
+    newUser.push({
       id: user._id,
       socketId: socket.id,
     });
+    users = newUser;
+    console.log("list users: ", users);
   });
 
   socket.on("testTemHumi", (data) => {
