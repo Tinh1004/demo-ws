@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
 
   socket.on("sendChat", async (data) => {
     console.log("data", data);
+    console.log("users", users);
     try {
       const message = data;
       var msgAnswer = await chatbotService.getAnswer(message.message);
