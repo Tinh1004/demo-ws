@@ -75,17 +75,26 @@ const driveCtrl = {
 
       //send message
       tokens.forEach((element) => {
+        console.log("user: ",element);
         if (arrayError.temp) {
-          sendMessageWarningTemp(element.token);
+          if (element.isNotifyWarningTemp) {
+            sendMessageWarningTemp(element.token);
+          }
         }
         if (arrayError.antiFire) {
-          sendMessageWarningAntiFire(element.token);
+          if (element.isNotifyAntiFire) {
+            sendMessageWarningAntiFire(element.token);
+          }
         }
         if (arrayError.antiTheft) {
-          sendMessageWarningAntiTheft(element.token);
+          if (element.isNotifyAntiTheft) {
+            sendMessageWarningAntiTheft(element.token);
+          }
         }
         if (arrayError.rainAlarm) {
-          sendMessageWarningRainAlarm(element.token);
+          if (element.isNotifyRainAlarm) {
+            sendMessageWarningRainAlarm(element.token);
+          }
         }
       });
 
@@ -146,6 +155,7 @@ function wsDataHumiTemp(data) {
 
 function sendMessageWarningAntiTheft(token) {
   sendMessage(token, "Cảnh Báo AntiTheft", "Waring AntiTheft !!!");
+  io.emit("antiTheft", "AntiTheft");
 }
 
 function sendMessageWarningAntiFire(token) {

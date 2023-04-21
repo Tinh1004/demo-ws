@@ -29,6 +29,17 @@ const tokenNotifyCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  updateTokenNotify: async (req, res) => {
+    try {
+      const {userId} = req.params;
+      console.log("userId", userId);
+      console.log(req.body);
+      const drive = await TokenNotify.updateMany({ userId:userId }, { $set: req.body });
+      return res.status(200).json({ msg: "Update success!!" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   removeTokenNotify: async (req, res) => {
     try {
       const notify = await TokenNotify.findOneAndDelete({
