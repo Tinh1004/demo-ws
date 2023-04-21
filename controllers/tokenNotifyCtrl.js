@@ -9,6 +9,15 @@ const tokenNotifyCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getTokenByIdUser: async (req, res) => {
+    try {
+      const {userId} = req.params;
+      const tokens = await TokenNotify.findOne({userId: userId});
+      return res.status(200).json(tokens);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   createTokenNotify: async (req, res) => {
     try {
       const { userId, token } = req.body;
