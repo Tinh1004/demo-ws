@@ -11,8 +11,8 @@ const tokenNotifyCtrl = {
   },
   getTokenByIdUser: async (req, res) => {
     try {
-      const {userId} = req.params;
-      const tokens = await TokenNotify.findOne({userId: userId});
+      const {token} = req.params;
+      const tokens = await TokenNotify.findOne({token: token});
       return res.status(200).json(tokens);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -48,18 +48,18 @@ const tokenNotifyCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-  removeTokenNotify: async (req, res) => {
-    try {
-      const notify = await TokenNotify.findOneAndDelete({
-        userId: req.params.userId,
-      });
-      return res
-        .status(200)
-        .json({ notify, messenger: "Remove token successed" });
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
-  },
+  // removeTokenNotify: async (req, res) => {
+  //   try {
+  //     const notify = await TokenNotify.findOneAndDelete({
+  //       userId: req.params.userId,
+  //     });
+  //     return res
+  //       .status(200)
+  //       .json({ notify, messenger: "Remove token successed" });
+  //   } catch (err) {
+  //     return res.status(500).json({ msg: err.message });
+  //   }
+  // },
   removeAllTokenNotify: async (req, res) => {
     try {
       const notify = await TokenNotify.remove();
