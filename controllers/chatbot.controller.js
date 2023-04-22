@@ -35,9 +35,25 @@ const chatbotController = {
       }
     });
   },
-  updateQuestion: (req, res) => {},
-  deteleAllQuestion: (req, res) => {},
-  deteleQuestionById: (req, res) => {},
+  updateQuestion: async (req, res) => {
+    const notify = await Question.findByIdAndDelete(req.params.id);
+    return res
+      .status(200)
+      .json({ notify, messenger: "Remove Question successed" });
+  },
+  deteleAllQuestion: async (req, res) => {
+    try {
+      const notify = await Question.remove();
+      return res
+        .status(200)
+        .json({ notify, messenger: "Remove Question successed" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  deteleQuestionById: async (req, res) => {
+
+  },
 };
 
 module.exports = chatbotController;

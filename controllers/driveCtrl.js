@@ -1,6 +1,6 @@
 const Drives = require("../models/driveModel");
 const TokenNotify = require("../models/tokenNotifyModal");
-const _id = "643051e1e4e0a63785a4f537";
+const _id = "644401c5e40e6c272070c6bf";
 const notifyService = require("../services/notify.servive");
 const io = require("../module_sokect");
 const serviceFCM = require("../serviceFCM");
@@ -9,6 +9,16 @@ const driveCtrl = {
     try {
       const drive = await Drives.findOne({ _id });
       res.status(200).json(drive);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  createDrive: async (req, res) => {
+    try {
+      const drive =  Drives(req.body);
+      console.log(drive);
+      const driveSave = drive.save();
+      res.status(200).json(driveSave);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -24,7 +34,6 @@ const driveCtrl = {
 
       //  ws light
       wsTurnOffOnLightLed(Led.Status);
-
       const arrayError = {
         temp: false,
         antiFire: false,
