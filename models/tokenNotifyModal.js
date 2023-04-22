@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const tokenNotifySchema = new mongoose.Schema(
   {
     token: String,
-    userId: { type: mongoose.Types.ObjectId, ref: "user" },
     isNotifyAntiTheft: {
       type: Boolean,
       default: true,

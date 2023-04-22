@@ -82,7 +82,6 @@ const notifyCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-
   getNotifiesForDate: async (req, res) => {
     try {
       console.log("date: ", req.params);

@@ -16,10 +16,11 @@ const driveCtrl = {
   updateDrive: async (req, res) => {
     try {
       const tokens = await TokenNotify.find();
-      console.log("tokens: ", tokens);
       console.log(req.body);
       const { Humidity, Temperature, AntiFire, AntiTheft, RainAlarm, Led } =
         req.body;
+        console.log("Temperature.Data: ", Temperature.Data);
+        console.log("Temperature  ", Temperature.Data >= 50);
 
       //  ws light
       wsTurnOffOnLightLed(Led.Status);
@@ -75,7 +76,7 @@ const driveCtrl = {
 
       //send message
       tokens.forEach((element) => {
-        console.log("user: ",element);
+        
         if (arrayError.temp) {
           if (element.isNotifyWarningTemp) {
             sendMessageWarningTemp(element.token);

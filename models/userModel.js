@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
         maxlength: 25
     },
-    username: {
+    identify: {
         type: String,
         required: true,
         trim: true,
-        maxlength: 25,
+        maxlength: 12,
         unique: true
     },
     email: {
@@ -38,10 +38,7 @@ const userSchema = new mongoose.Schema({
         default: '',
         maxlength: 200
     },
-    website: {type: String, default: ''},
-    followers: [{type: mongoose.Types.ObjectId, ref: 'user'}],
-    following: [{type: mongoose.Types.ObjectId, ref: 'user'}],
-    saved: [{type: mongoose.Types.ObjectId, ref: 'user'}]
+   
 }, {
     timestamps: true
 })

@@ -6,7 +6,7 @@ const sendEMail = require("../lib/sendMail.js");
 const authCtrl = {
   register: async (req, res) => {
     try {
-      const { email, password, username, fullname } = req.body;
+      const { email, password, identify, fullname, mobile, address } = req.body;
 
       const user_email = await Users.findOne({ email });
       if (user_email)
@@ -23,8 +23,10 @@ const authCtrl = {
 
       const newUser = new Users({
         email,
-        username,
+        identify,
         fullname,
+        mobile,
+        address,
         password: passwordHash,
       });
 
@@ -99,7 +101,7 @@ const authCtrl = {
             .select("-password")
             .populate(
               "followers following",
-              "avatar username fullname followers following"
+              "avatar identify fullname followers following"
             );
 
           if (!user)
@@ -128,7 +130,7 @@ const authCtrl = {
 
       const url = `${process.env.CLIENT_URL}/reset-password/${access_token}`;
 
-      sendEMail(email, url, user.username, "Please click to reset password");
+      sendEMail(email, url, user.identify, "Please click to reset password");
 
       res.status(200).json({
         msg: "re-send the password, please check your email!",

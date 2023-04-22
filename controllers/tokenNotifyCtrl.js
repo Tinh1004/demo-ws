@@ -23,7 +23,6 @@ const tokenNotifyCtrl = {
       const { userId, token } = req.body;
       const tokenExisted = await TokenNotify.findOne({
         token: token,
-        userId: userId,
       });
       if (tokenExisted) {
         return res.status(500).json({ msg: "Token existed." });
@@ -40,10 +39,10 @@ const tokenNotifyCtrl = {
   },
   updateTokenNotify: async (req, res) => {
     try {
-      const {userId} = req.params;
-      console.log("userId", userId);
+      const {token} = req.params;
+      console.log("token", token);
       console.log(req.body);
-      const drive = await TokenNotify.updateMany({ userId:userId }, { $set: req.body });
+      const drive = await TokenNotify.updateMany({ token:token }, { $set: req.body });
       return res.status(200).json({ msg: "Update success!!" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
