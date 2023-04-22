@@ -12,6 +12,7 @@ const tokenNotifyCtrl = {
   getTokenByIdUser: async (req, res) => {
     try {
       const {token} = req.params;
+      console.log(token);
       const tokens = await TokenNotify.findOne({token: token});
       return res.status(200).json(tokens);
     } catch (err) {
