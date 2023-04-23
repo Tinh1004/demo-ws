@@ -36,7 +36,7 @@ const chatbotController = {
     });
   },
   updateQuestion: async (req, res) => {
-    const notify = await Question.findByIdAndDelete(req.params.id);
+    const notify = await Question.findByIdAndUpdate(req.params.id, { $set: objectLightLed });
     return res
       .status(200)
       .json({ notify, messenger: "Remove Question successed" });
@@ -53,6 +53,15 @@ const chatbotController = {
   },
   deteleQuestionById: async (req, res) => {
 
+    try {
+      const { id } = req.params;
+      const notify = await Question.deleteOne({ _id: id });
+      return res
+        .status(200)
+        .json({ notify, messenger: "Remove Question successed" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
   },
 };
 
