@@ -16,18 +16,12 @@ const notifyCtrl = {
       const startOfDay = new Date(
         now.getFullYear(),
         now.getMonth(),
-        now.getDate(),
-        7,
-        0,
-        0
+        now.getDate()
       );
       const endOfDay = new Date(
         now.getFullYear(),
         now.getMonth(),
-        now.getDate() + 1,
-        7,
-        0,
-        0
+        now.getDate() + 1
       );
       console.log("startOfDay: ", startOfDay);
       console.log("endOfDay: ", endOfDay);
@@ -46,18 +40,12 @@ const notifyCtrl = {
       const startOfDay = new Date(
         now.getFullYear(),
         now.getMonth(),
-        now.getDate(),
-        7,
-        0,
-        0
+        now.getDate()
       );
       const endOfDay = new Date(
         now.getFullYear(),
         now.getMonth(),
-        now.getDate() + 1,
-        7,
-        0,
-        0
+        now.getDate() + 1
       );
       console.log("startOfDay: ", startOfDay);
       console.log("endOfDay: ", endOfDay);
