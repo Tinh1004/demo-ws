@@ -39,7 +39,7 @@ const chatbotController = {
     const notify = await Question.findByIdAndUpdate(req.params.id, { $set: objectLightLed });
     return res
       .status(200)
-      .json({ notify, messenger: "Remove Question successed" });
+      .json({ notify, messenger: "Update Question successed" });
   },
   deteleAllQuestion: async (req, res) => {
     try {

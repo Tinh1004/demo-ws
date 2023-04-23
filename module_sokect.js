@@ -87,7 +87,7 @@ io.on("connection", (socket) => {
       console.log("error");
       const jsonObject = {
         user: "Bot",
-        userId: "1",
+        userId: data.userId,
         message: errorMsg,
       };
       io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
