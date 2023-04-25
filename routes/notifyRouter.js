@@ -2,9 +2,7 @@ const router = require("express").Router();
 const auth = require("../middleware/auth");
 const notifyCtrl = require("../controllers/notifyCtrl");
 
-router.get("/notifies", auth, notifyCtrl.getNotifies);
-
-router.post("/notify", auth, notifyCtrl.createNotify);
+router.get("/notify", notifyCtrl.getNotifies);
 
 router.get("/notify-today", notifyCtrl.getNotifiesToday);
 router.get("/count-notify-theft", notifyCtrl.countNotifiesAllAntiTheft);
