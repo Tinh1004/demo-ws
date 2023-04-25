@@ -49,6 +49,8 @@ app.use("/api", require("./routes/userRouter"));
 app.use("/api", require("./routes/notifyRouter"));
 app.use("/api", require("./routes/driveRouter"));
 app.use("/api/chatbot", require("./routes/chatbotRoute.js"));
+app.use("/api/feedback", require("./routes/feedbackRouter"));
+app.use("/api/savelogin", require("./routes/saveLoginRouter"));
 
 // app.use("/apiNPM", (req, res) => {
 //   const token =
