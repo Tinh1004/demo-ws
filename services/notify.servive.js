@@ -7,6 +7,7 @@ const driveService = {
       const notify = await newNotify.save();
       return notify;
     } catch (err) {
+      console.log(err);
       return null;
     }
   },

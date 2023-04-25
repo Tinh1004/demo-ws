@@ -10,6 +10,7 @@ const driveCtrl = {
       const drive = await Drives.findOne({ _id });
       res.status(200).json(drive);
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ msg: err.message });
     }
   },
@@ -29,8 +30,8 @@ const driveCtrl = {
       console.log(req.body);
       const { Humidity, Temperature, AntiFire, AntiTheft, RainAlarm, Led } =
         req.body;
-        console.log("Temperature.Data: ", Temperature.Data);
-        console.log("Temperature  ", Temperature.Data >= 50);
+      console.log("Temperature.Data: ", Temperature.Data);
+      console.log("Temperature  ", Temperature.Data >= 50);
 
       //  ws light
       wsTurnOffOnLightLed(Led.Status);
@@ -85,7 +86,7 @@ const driveCtrl = {
 
       //send message
       tokens.forEach((element) => {
-        
+
         if (arrayError.temp) {
           if (element.isNotifyWarningTemp) {
             sendMessageWarningTemp(element.token);
@@ -123,10 +124,11 @@ const driveCtrl = {
     try {
       const { Led } = req.body;
       console.log("new status", req.body);
-      const drive = await Drives.updateOne({ _id }, { $set: req.body });
+      await Drives.updateOne({ _id }, { $set: req.body });
       wsTurnOffOnLightLed(Led.Status);
       return res.status(200).json(Led.Status);
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ msg: err.message });
     }
   },

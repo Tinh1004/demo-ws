@@ -4,10 +4,9 @@ const jwt = require("jsonwebtoken");
 const auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization");
-
     if (!token) return res.status(400).json({ msg: "Invalid Authentication." });
-    const tokenWithDots = token.replace(/-/g, ".");
-    const decoded = jwt.verify(tokenWithDots, process.env.ACCESS_TOKEN_SECRET);
+
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     if (!decoded)
       return res.status(400).json({ msg: "Invalid Authentication." });
 
@@ -16,6 +15,7 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ msg: err.message });
   }
 };
