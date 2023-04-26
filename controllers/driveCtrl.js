@@ -34,14 +34,19 @@ const driveCtrl = {
   updateDrive: async (req, res) => {
     try {
       const tokens = await TokenNotify.find();
+      const drive = await Drives.findOne({ _id });
       console.log(req.body);
       const { Humidity, Temperature, AntiFire, AntiTheft, RainAlarm, Led } =
         req.body;
         console.log("Temperature.Data: ", Temperature.Data);
         console.log("Temperature  ", Temperature.Data >= 50);
+        console.log("Led.Status: ", Led.Status);
+        console.log("AntiTheft.Status: ", AntiTheft.Status);
+        console.log("AntiFire.Status: ", AntiFire.Status);
 
       //  ws light
       wsTurnOffOnLightLed(Led.Status);
+
       const arrayError = {
         temp: false,
         antiFire: false,
@@ -59,8 +64,9 @@ const driveCtrl = {
         };
         notifyService.createNotify(object);
       }
+
       // check device warning send FCM
-      if (AntiFire.Status != "no" || AntiFire.PPM > 100) {
+      if (AntiFire.PPM > 100) {
         arrayError.antiFire = true;
         const object = {
           title: "Cảnh Báo AntiFire",
@@ -69,8 +75,9 @@ const driveCtrl = {
         };
         notifyService.createNotify(object);
       }
+
       // check device warning send FCM
-      if (AntiTheft.Status != "no") {
+      if (AntiTheft.Times != drive.AntiTheft.Times) {
         arrayError.antiTheft = true;
         const object = {
           title: "Cảnh Báo AntiTheft",
@@ -81,7 +88,7 @@ const driveCtrl = {
       }
 
       //check device rain warning send FCM
-      if (RainAlarm.Status != "no") {
+      if (RainAlarm.Status != "0") {
         arrayError.rainAlarm = true;
         const object = {
           title: "Cảnh Báo RainAlarm",
@@ -118,10 +125,13 @@ const driveCtrl = {
 
       // ws temp and humi
       const data = { temp: Temperature.Data, humi: Humidity.Data };
+      console.log("data: ",data);
       wsDataHumiTemp(data);
 
       //update dive
       await Drives.updateOne({ _id }, { $set: req.body });
+
+
       res.status(200).json(req.body);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
