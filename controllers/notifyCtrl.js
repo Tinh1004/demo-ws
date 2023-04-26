@@ -9,7 +9,15 @@ const notifyCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-
+  createNotify: async (data) => {
+    try {
+      const newNotify = new Notifies(data);
+      const notify = await newNotify.save();
+      return notify;
+    } catch (err) {
+      return null;
+    }
+  },
   getNotifiesToday: async (req, res) => {
     try {
       const now = new Date();
@@ -88,6 +96,7 @@ const notifyCtrl = {
       }).count();
       return res.status(200).json({ count: notifies });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ msg: err.message });
     }
   },

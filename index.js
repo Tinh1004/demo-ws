@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const SocketServer = require("./socketServer");
 const { ExpressPeerServer } = require("peer");
 const path = require("path");
 const io = require("./module_sokect.js");
@@ -27,7 +26,6 @@ mongoose.connect(
     console.log("Connected to mongodb");
   }
 );
-
 
 // Socket
 const http = require("http").createServer(app);
