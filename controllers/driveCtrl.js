@@ -36,13 +36,21 @@ const driveCtrl = {
       const tokens = await TokenNotify.find();
       const drive = await Drives.findOne({ _id });
       console.log(req.body);
-      const { Humidity, Temperature, AntiFire, AntiTheft, RainAlarm, Led } =
+      const { Humidity, Temperature, AntiFire, AntiTheft, RainAlarm } =
         req.body;
+
         console.log("Temperature.Data: ", Temperature.Data);
         console.log("Temperature  ", Temperature.Data >= 50);
-        console.log("Led.Status: ", Led.Status);
-        console.log("AntiTheft.Status: ", AntiTheft.Status);
-        console.log("AntiFire.Status: ", AntiFire.Status);
+        console.log("AntiTheft.Status: ", AntiTheft);
+        console.log("AntiFire.Status: ", AntiFire);
+
+        // const obj = {
+        //   Humidity: { Data: 71.40000153 },
+        //   Temperature: { Data: 31.39999962 },
+        //   AntiTheft: { Times: '1' },
+        //    AntiFire: { PPM: '100' },
+        //  RainAlarm: { Status: '0' }
+        //   }
 
       //  ws light
       wsTurnOffOnLightLed(Led.Status);
@@ -129,7 +137,7 @@ const driveCtrl = {
       wsDataHumiTemp(data);
 
       //update dive
-      await Drives.updateOne({ _id }, { $set: req.body });
+      await Drives.updateOne({ _id }, { $set:  req.body });
 
 
       res.status(200).json(req.body);
