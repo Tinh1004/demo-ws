@@ -96,7 +96,7 @@ const driveCtrl = {
       }
 
       //check device rain warning send FCM
-      if (RainAlarm.Status != "0") {
+      if (RainAlarm.Status != "no") {
         arrayError.rainAlarm = true;
         const object = {
           title: "Cảnh Báo RainAlarm",
