@@ -53,7 +53,7 @@ const driveCtrl = {
         //   }
 
       //  ws light
-      wsTurnOffOnLightLed(Led.Status);
+      // wsTurnOffOnLightLed(Led.Status);
 
       const arrayError = {
         temp: false,
