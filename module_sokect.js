@@ -74,7 +74,6 @@ io.on("connection", (socket) => {
     for (var i = 0; i < users.length; i++) {
       if (users[i].socketId == socket.id) {
         users.splice(i, 1);
-        break;
       }
     }
     console.log(users);
