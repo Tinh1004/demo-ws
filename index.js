@@ -12,6 +12,15 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 const URI = process.env.MONGODB_URL;
 mongoose.connect(
   URI,
@@ -26,6 +35,8 @@ mongoose.connect(
     console.log("Connected to mongodb");
   }
 );
+
+
 
 // Socket
 const http = require("http").createServer(app);
