@@ -17,11 +17,12 @@ io.on("connection", (socket) => {
       if(e.id == user._id){
         socketIdLogin = e.socketId;
       }
-      return e.id != user._id;
+      return e.id != user._id && e.mobile == user.mobile;
     });
     newUser.push({
       id: user._id,
       socketId: socket.id,
+      mobile: user.mobile == true
     });
     if(user.mobile){
       console.log('is mobile');
@@ -72,7 +73,7 @@ io.on("connection", (socket) => {
       const jsonObject = {
         user: "Bot",
         userId: data.userId,
-        message: errorMsg,
+        message: "Xin lỗi, tôi không hiểu bạn nói gì.",
       };
       io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
     }
