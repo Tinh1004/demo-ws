@@ -12,17 +12,20 @@ io.on("connection", (socket) => {
   socket.on("joinUser", (user) => {
     console.log("user", user._id);
     let socketIdLogin = '';
+
     const newUser = users.filter((e, i) => {
       if(e.id == user._id){
         socketIdLogin = e.socketId;
       }
       return e.id != user._id && e.mobile == user.mobile;
     });
+
     newUser.push({
       id: user._id,
       socketId: socket.id,
       mobile: user.mobile == true
     });
+
     if(user.mobile){
       console.log('is mobile');
       if(socketIdLogin){
@@ -54,9 +57,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendChat", async (data) => {
+    console.log("data",data);
+    const message = data;
+    const findUser = users.find((e, i) => (e.id = data.userId));
     try {
-      const message = data;
-      const findUser = users.find((e, i) => (e.id = data.userId));
       var msgAnswer = await processInput(message.message, { client: findUser, socket });
 
       const jsonObject = {
