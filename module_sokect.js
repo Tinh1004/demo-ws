@@ -11,32 +11,14 @@ io.on("connection", (socket) => {
 
   socket.on("joinUser", (user) => {
     console.log("user", user._id);
-    let socketIdLogin = '';
-
     const newUser = users.filter((e, i) => {
-      if(e.id == user._id){
-        socketIdLogin = e.socketId;
-      }
-      return e.id != user._id && e.mobile == user.mobile;
+      return e.id != user._id;
     });
-
     newUser.push({
       id: user._id,
       socketId: socket.id,
-      mobile: user.mobile == true
     });
-
-    if(user.mobile){
-      console.log('is mobile');
-      if(socketIdLogin){
-        socket.to(`${socketIdLogin}`).emit("ws-login", "another login");
-      }
-    }else{
-      console.log('is not mobile');
-    }
-
     users = newUser;
-
   });
 
   socket.on("testTemHumi", (data) => {
