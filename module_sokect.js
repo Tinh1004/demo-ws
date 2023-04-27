@@ -12,7 +12,6 @@ io.on("connection", (socket) => {
   socket.on("joinUser", (user) => {
     console.log("user", user._id);
     let socketIdLogin = '';
-
     const newUser = users.filter((e, i) => {
       if(e.id == user._id){
         socketIdLogin = e.socketId;
