@@ -57,12 +57,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendChat", async (data) => {
-    console.log("data",data);
-    const message = data;
-    const findUser = users.find((e, i) => (e.id = data.userId));
-    try {
-      var msgAnswer = await processInput(message.message, { client: findUser, socket });
+    
 
+    try {
+      console.log("data",data);
+      const message = data;
+      const findUser = users.find((e, i) => (e.id = data.userId));
+      console.log("findUser",findUser);
+      var msgAnswer = await processInput(message.message, { client: findUser, socket });
       const jsonObject = {
         user: "Bot",
         userId: "1",
@@ -70,15 +72,16 @@ io.on("connection", (socket) => {
         bot: true,
         createdAt: new Date()
       };
+      console.log("jsonObject", jsonObject);
       io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
     } catch (error) {
       console.log("error", error);
-      const jsonObject = {
-        user: "Bot",
-        userId: data.userId,
-        message: "Xin lỗi, tôi không hiểu bạn nói gì.",
-      };
-      io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
+      // const jsonObject = {
+      //   user: "Bot",
+      //   userId: data.userId,
+      //   message: "Xin lỗi, tôi không hiểu bạn nói gì.",
+      // };
+      // io.to(`${findUser.socketId}`).emit("sendChat", jsonObject);
     }
   });
 
