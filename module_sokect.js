@@ -8,11 +8,13 @@ var users = [];
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
+
   socket.on("joinUser", (user) => {
     console.log("user", user._id);
     let socketIdLogin = '';
+
     const newUser = users.filter((e, i) => {
-      if(e.id != user._id){
+      if(e.id == user._id){
         socketIdLogin = e.socketId;
       }
       return e.id != user._id;
@@ -21,7 +23,6 @@ io.on("connection", (socket) => {
       id: user._id,
       socketId: socket.id,
     });
-    users = newUser;
     if(user.mobile){
       console.log('is mobile');
       if(socketIdLogin){
@@ -30,6 +31,9 @@ io.on("connection", (socket) => {
     }else{
       console.log('is not mobile');
     }
+
+    users = newUser;
+
   });
 
   socket.on("testTemHumi", (data) => {
