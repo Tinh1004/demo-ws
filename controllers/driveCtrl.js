@@ -8,6 +8,7 @@ const driveCtrl = {
   getDrive: async (_, res) => {
     try {
       const drive = await Drives.findOne({ _id });
+      console.log(`drive: ${drive}`);
       res.status(200).json(drive.Led.Status);
     } catch (err) {
       return res.status(500).json({ msg: err.message });

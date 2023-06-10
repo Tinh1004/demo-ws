@@ -14,7 +14,9 @@ const driveSchema = new mongoose.Schema(
       Data: Number,
     },
     Led: {
-      Status: Number,
+      tang1: Number, defaultValue: 0, 
+      tang2: Number, defaultValue: 0, 
+      tang3: Number, defaultValue: 0, 
     },
     RainAlarm: {
       Status: String,
