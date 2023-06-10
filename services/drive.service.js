@@ -13,9 +13,7 @@ const driveService = {
   updateStatusLight: async (status) => {
     try {
       const objectLightLed = {
-        Led: {
-          Status: status,
-        },
+        Led: status,
       };
       const drive = await Drives.updateOne({ _id }, { $set: objectLightLed });
       return status;
