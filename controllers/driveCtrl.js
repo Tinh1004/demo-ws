@@ -9,7 +9,7 @@ const driveCtrl = {
     try {
       const drive = await Drives.findOne({ _id });
       console.log(`drive: ${drive}`);
-      res.status(200).json(drive.Led.Status);
+      res.status(200).json(drive.Led);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -152,8 +152,8 @@ const driveCtrl = {
       const { Led } = req.body;
       console.log("new status", req.body);
       await Drives.updateOne({ _id }, { $set: req.body });
-      wsTurnOffOnLightLed(Led.Status);
-      return res.status(200).json(Led.Status);
+      wsTurnOffOnLightLed(Led);
+      return res.status(200).json(Led);
     } catch (err) {
       console.log(err);
       return res.status(500).json({ msg: err.message });
