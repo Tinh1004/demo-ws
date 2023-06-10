@@ -34,6 +34,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("testLight", async (data) => {
+    console.log(`data: ${data}`);
     await driveService.updateStatusLight(data);
     socket.emit("testLight", data);
   });
